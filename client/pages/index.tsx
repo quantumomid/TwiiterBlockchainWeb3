@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import Feed from "../components/home/Feed";
 import Sidebar from "../components/Sidebar";
 
 const style = {
@@ -8,13 +9,13 @@ const style = {
 
 const Home: NextPage = () => {
   return (
-    <main className={style.wrapper}>
+    <div className={style.wrapper}>
       <div className={style.content}>
         <Sidebar initialSelectedIcon={'Home'}/>
-        <h2>Feed</h2>
+        <Feed />
         <h2>Widgets</h2>
       </div>
-    </main>
+    </div>
   )
 }
 
