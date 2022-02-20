@@ -5,7 +5,7 @@ import Widgets from "../components/Widgets";
 
 const style = {
   wrapper: "flex justify-center h-screen w-screen select-none bg-[#15202b] text-white",
-  content: "max-w-[1400px] w-2/3 flex justify-between"
+  content: "max-w-[1400px] w-8/9 flex justify-between"
 }
 
 const Home: NextPage = () => {

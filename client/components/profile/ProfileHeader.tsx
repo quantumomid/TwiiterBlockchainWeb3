@@ -10,7 +10,7 @@ const style = {
     primary: "font-bold bg-transparent outline-none",
     details: "px-3",
     secondary: "text-[#8899a6] text-xs",
-    coverPhotoContainer: "h-[15vh] overflow-hidden",
+    coverPhotoContainer: "h-[200px] w-full overflow-hidden",
     profileImageContainer: "w-[60px] h-[60px] rounded-full overflow-hidden mt-[-2rem] ml-2 mb-4",
     nav: "py-2",
     navOptions: "flex items-center justify-around text-xs font-semibold text-[#8899a6]",
@@ -39,9 +39,10 @@ const ProfileHeader: React.FC = () => {
                     src="/cover.jpg"
                     alt='cover'
                     width={1500}
-                    height={1000}
+                    height={1500}
                     layout="responsive"
                     objectFit="cover"
+                    objectPosition="center bottom"
                 />
             </div>
             <div className={`${style.profileImageContainer} ${isProfileImageNft && "rounded-none"}`}>
