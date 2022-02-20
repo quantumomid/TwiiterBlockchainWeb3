@@ -4,7 +4,7 @@ import Post from "../Post";
 import TweetBox from "./TweetBox";
 
 const style = {
-    wrapper: "flex-[2] border-r border-l border-[#38444d]",
+    wrapper: "flex-[2] border-r border-l border-[#38444d] overflow-y-scroll",
     header: "sticky top-0 bg-[#15202b] z-10 p-4 flex justify-between items-center",
     headerTitle: "text-xl font-bold",
 }
@@ -50,7 +50,7 @@ const tweets = [
 
 const Feed: React.FC = () => {
     return (
-        <main className={style.wrapper}>
+        <main className={`${style.wrapper} scrollbar-hide`}>
             <header className={style.header}>
                 <h1 className={style.headerTitle}>Home</h1>
                 <BsStars />
