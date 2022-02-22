@@ -16,6 +16,9 @@ import {
 import { useRouter } from "next/router";
 import { TwitterContext } from "../context/TwitterContext";
 import Image from "next/image";
+import Modal from "react-modal";
+import ProfileImageMinter from "./profile/mintingModal/ProfileImageMinter";
+import { customStyles } from "../lib/constants";
 
 const style = {
     wrapper: "flex-[0.7] px-8 flex flex-col",
@@ -41,6 +44,7 @@ const Sidebar: React.FC<SidebarProps> = ({ initialSelectedIcon }) => {
     const [selected, setSelected] = useState<String>(initialSelectedIcon);
     const { currentAccount, currentUser } = useContext(TwitterContext);
     const router = useRouter();
+    console.log(router.pathname)
     return (
         <header className={style.wrapper}>
             <div className={style.twitterIconContainer}>
@@ -145,6 +149,13 @@ const Sidebar: React.FC<SidebarProps> = ({ initialSelectedIcon }) => {
                         </div>
                     </div>
             }
+            <Modal
+                isOpen={Boolean(router.query.mint)} // If mint objects exists in the query property - this is only when we click in the mint button above
+                onRequestClose={() => router.back()} // Go back i.e. to homepage or profile - wherever user was before clicking the Mint button
+                style={customStyles}
+            >
+                <ProfileImageMinter />
+            </Modal>
         </header>
     );
 }
