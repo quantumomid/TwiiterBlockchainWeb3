@@ -3,6 +3,7 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 import { Fragment } from "react";
 import "../styles/hexStyles.css";
+import { TwitterProvider } from "../context/TwitterContext";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -10,7 +11,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Head>
         <title>Twitter Web3 Clone</title>
       </Head>
-      <Component {...pageProps} />
+      <TwitterProvider>
+        <Component {...pageProps} />
+      </TwitterProvider>
     </Fragment>
   )
 }

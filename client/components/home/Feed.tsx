@@ -59,7 +59,7 @@ const Feed: React.FC = () => {
             {
                 tweets.map((tweet) => (
                     <Post 
-                        key={tweet.text}
+                        key={tweet.text + tweet.timestamp.toString()}
                         displayName={tweet.displayName}
                         userName={`${tweet.username.slice(0, 4)}...${tweet.username.slice(-4)}`}
                         text={tweet.text}

@@ -4,13 +4,13 @@ import { useRouter } from "next/router";
 export const TwitterContext = createContext();
 
 export const TwitterProvider = ({ children }) => {
-    const [appStatus, setAppStatus] = useState("loading");
+    const [appStatus, setAppStatus] = useState("");
     const [currentAccount, setCurrentAccount] = useState("");
     const router = useRouter();
     
     useEffect(async() => {
         await checkIfWalletIsConnected();
-    }), [];
+    }, []);
 
     const checkIfWalletIsConnected = async () => {
         // First see if ethereum exists on window object
@@ -25,20 +25,21 @@ export const TwitterProvider = ({ children }) => {
                 setCurrentAccount(addressArray[0]);
             } else {
                 // NOT connected
+                router.push("/");
                 setAppStatus("notConnected");
             }
         } catch (error) {
             // console.log(error);
-            setAppStatus("error")
+            setAppStatus("error");
+            router.push("/");
         }
     }
 
     // Initiates MetaMask wallet connection
     const connectToWallet = async() => {
         if(!window.ethereum) return setAppStatus("noMetaMask");
-
-        setAppStatus("loading");
         try {
+            setAppStatus("loading");
             const addressArray = await window.ethereum.request({
                 method: "eth_requestAccounts"
             });
@@ -52,7 +53,8 @@ export const TwitterProvider = ({ children }) => {
                 setAppStatus("notConnected");
             }
         } catch (error) {
-            setAppStatus("error")
+            setAppStatus("error");
+            router.push("/");
         }
     }
 

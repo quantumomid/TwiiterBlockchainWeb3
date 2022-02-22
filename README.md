@@ -6,10 +6,11 @@ A clone of Twitter social media platform using blockchain technologies such as w
 ## Tech Stack
 
 - Next.js
-- Tailwind CSS (for styling)
+- Tailwind CSS (for styling) 🎨
 - Sanity CMS
 - Solidity
-- [Alchemy](https://www.alchemy.com/)
+- [Alchemy](https://www.alchemy.com/) 🧪
+- Metamask (for authentication) 🦊
 
 ## Smart Contract
 
