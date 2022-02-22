@@ -16,6 +16,12 @@ export const TwitterProvider = ({ children }) => {
         await checkIfWalletIsConnected();
     }, []);
 
+    useEffect(async () => {
+        if (!currentAccount || appStatus !== 'connected') return;
+        await getCurrentUserDetails(currentAccount)
+        await fetchTweets()
+    }, [currentAccount, appStatus])
+
     const checkIfWalletIsConnected = async () => {
         // First see if ethereum exists on window object
         if(!window.ethereum) return setAppStatus("noMetaMask");
@@ -105,14 +111,14 @@ export const TwitterProvider = ({ children }) => {
 
         sanityResponse.forEach(async (item) => {
             // const profileImageUrl = await 
-
+            // console.log({item})
             const newItem = {
                 tweet: item.tweet,
                 timestamp: item.timestamp,
                 author: {
                   name: item.author.name,
                   walletAddress: item.author.walletAddress,
-                  profileImage: profileImageUrl,
+                  profileImage: item.author.profileImage,
                   isProfileImageNft: item.author.isProfileImageNft,
                 },
             }

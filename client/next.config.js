@@ -8,6 +8,7 @@ module.exports = {
       "cloudfront-us-east-1.images.arcpublishing.com",
       "www.sanity.io",
       "avatars.githubusercontent.com",
+      "about.twitter.com",
     ]
   }
 }

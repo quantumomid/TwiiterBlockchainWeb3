@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import { BsStars } from "react-icons/bs";
+import { TwitterContext } from "../../context/TwitterContext";
 import Post from "../Post";
 import TweetBox from "./TweetBox";
 
@@ -9,46 +10,21 @@ const style = {
     headerTitle: "text-xl font-bold",
 }
 
-const tweets = [
-    {
-        displayName: "Omid",
-        username: "0xe22711bCa99ff337977792122910172CE08943Ad",
-        avatar: "/dummyProfileImage.jpg",
-        text: "Salaaaaaaam matteee!",
-        isProfileImageNft: false,
-        timestamp: "2022-02-19T12:00:00.000Z",
-
-    },
-    {
-        displayName: "Omid",
-        username: "0xe22711bCa99ff337977792122910172CE08943Ad",
-        avatar: "/dummyProfileImage.jpg",
-        text: "Salaaaaaaam matteee!",
-        isProfileImageNft: false,
-        timestamp: "2022-01-01T12:00:00.000Z",
-
-    },
-    {
-        displayName: "Omid",
-        username: "0xe22711bCa99ff337977792122910172CE08943Ad",
-        avatar: "/dummyProfileImage.jpg",
-        text: "Salaaaaaaam matteee!",
-        isProfileImageNft: false,
-        timestamp: "2021-12-01T12:00:00.000Z",
-
-    },
-    {
-        displayName: "Omid",
-        username: "0xe22711bCa99ff337977792122910172CE08943Ad",
-        avatar: "/dummyProfileImage.jpg",
-        text: "Salaaaaaaam matteee!",
-        isProfileImageNft: false,
-        timestamp: "2020-06-01T12:00:00.000Z",
-
-    },
-]
+interface Tweet {
+    author: TweetAuthor;
+    tweet: string;
+    timestamp: string;
+}
+  
+interface TweetAuthor {
+    name: string;
+    walletAddress: string;
+    profileImage: string;
+    isProfileImageNft: boolean;
+}
 
 const Feed: React.FC = () => {
+    const { tweets } = useContext(TwitterContext);
     return (
         <main className={`${style.wrapper} scrollbar-hide`}>
             <header className={style.header}>
@@ -57,15 +33,25 @@ const Feed: React.FC = () => {
             </header>
             <TweetBox />
             {
-                tweets.map((tweet) => (
+                tweets.map((tweet: Tweet) => (
                     <Post 
-                        key={tweet.text + tweet.timestamp.toString()}
-                        displayName={tweet.displayName}
-                        userName={`${tweet.username.slice(0, 4)}...${tweet.username.slice(-4)}`}
-                        text={tweet.text}
-                        avatar={tweet.avatar}
-                        isProfileImageNft={tweet.isProfileImageNft}
-                        timestamp={tweet.timestamp}
+                        key={tweet.tweet + tweet.timestamp.toString()}
+                        displayName={
+                            tweet.author.name === 'Unnamed'
+                              ? `${tweet.author.walletAddress.slice(
+                                  0,
+                                  4,
+                                )}...${tweet.author.walletAddress.slice(41)}`
+                              : tweet.author.name
+                          }
+                          userName={`${tweet.author.walletAddress.slice(
+                            0,
+                            4,
+                          )}...${tweet.author.walletAddress.slice(41)}`}
+                          text={tweet.tweet}
+                          avatar={tweet.author.profileImage}
+                          isProfileImageNft={tweet.author.isProfileImageNft}
+                          timestamp={tweet.timestamp}
                     />
                 ))
             }

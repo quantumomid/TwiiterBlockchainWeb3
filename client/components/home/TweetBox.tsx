@@ -23,7 +23,7 @@ const style = {
 
 const TweetBox:React.FC = () => {
     const [tweetMessage, setTweetMessage] = useState("");
-    const { currentAccount } = useContext(TwitterContext);
+    const { currentAccount, currentUser, tweets } = useContext(TwitterContext);
     
     const submitTweet = async (event: any) => {
         event.preventDefault();
@@ -64,19 +64,20 @@ const TweetBox:React.FC = () => {
     return (
         <section className={style.wrapper}>
             <div className={style.tweetBoxLeft}>
-                <Image
-                    src="/dummyProfileImage.jpg"
-                    alt="Profile picture"
-                    className={style.profileImage}
-                    height={40}
-                    width={40}
-                    // src={currentUser.profileImage}
-                    // className={
-                    //     currentUser.isProfileImageNft
-                    //     ? `${style.profileImage} smallHex`
-                    //     : style.profileImage
-                    // }
-                />
+                { 
+                    currentUser.profileImage && 
+                    <Image
+                        src={currentUser.profileImage}
+                        alt="Profile picture"
+                        height={40}
+                        width={40}
+                        className={
+                            currentUser.isProfileImageNft
+                            ? `${style.profileImage} smallHex`
+                            : style.profileImage
+                        }
+                    />       
+                }
             </div>
             <div className={style.tweetBoxRight}>
                 <form>

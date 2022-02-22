@@ -1,7 +1,8 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { BsArrowLeftShort } from "react-icons/bs";
+import { TwitterContext } from "../../context/TwitterContext";
 
 const style = {
     wrapper: "border-[#38444d] border-b",
@@ -17,46 +18,91 @@ const style = {
     activeNav: "text-white",
 }
  
+interface Tweets {
+    tweet: string
+    timestamp: string
+}
+  
+interface UserData {
+    name: string
+    profileImage: string
+    coverImage: string
+    walletAddress: string
+    tweets: Array<Tweets>
+    isProfileImageNft: Boolean | undefined
+}
+
 const ProfileHeader: React.FC = () => {
+    const { currentUser, currentAccount } = useContext(TwitterContext);
+    const [userData, setUserData] = useState<UserData>({
+        name: "",
+        profileImage: "",
+        coverImage: "",
+        walletAddress: "",
+        tweets: [],
+        isProfileImageNft: undefined,
+    });
     const router = useRouter();
+    
+    useEffect(() => {
+        if (!currentUser) return
+        setUserData({
+            name: currentUser.name,
+            profileImage: currentUser.profileImage,
+            walletAddress: currentUser.walletAddress,
+            coverImage: currentUser.coverImage,
+            tweets: currentUser.tweets,
+            isProfileImageNft: currentUser.isProfileImageNft,
+        });
+    }, [currentUser]);
 
-    const isProfileImageNft = false;
-    const currentAccount = "0xe22711bCa99ff337977792122910172CE08943Ad";
-
+    console.log({currentUser})
     return (
         <header className={style.wrapper}>
             <section className={style.intro}>
-                <div className={style.backIcon}>
+                <button className={style.backIcon} onClick={() => router.push("/")}>
                     <BsArrowLeftShort />                
-                </div>
+                </button>
                 <div className={style.details}>
-                    <h1 className={style.primary}>Omid</h1>
-                    <p className={style.secondary}>4 Tweets</p>
+                    <h1 className={style.primary}>{userData.name}</h1>
+                    <p className={style.secondary}>
+                        {userData?.tweets?.length} 
+                        {userData?.tweets?.length === 1 ? " Tweet" : " Tweets"} 
+                    </p>
                 </div>
             </section>
             <div className={style.coverPhotoContainer}>
-                <Image
-                    src="/cover.jpg"
-                    alt='cover'
-                    width={1500}
-                    height={1500}
-                    layout="responsive"
-                    objectFit="cover"
-                    objectPosition="center bottom"
-                />
+                {
+                    userData.coverImage 
+                        &&
+                    <Image
+                        src={userData.coverImage}
+                        alt="cover"
+                        width={1500}
+                        height={1500}
+                        layout="responsive"
+                        objectFit="cover"
+                        objectPosition="center bottom"
+                    />
+                }
+
             </div>
-            <div className={`${style.profileImageContainer} ${isProfileImageNft && "rounded-none"}`}>
-                <Image
-                    src="/dummyProfileImage.jpg"
-                    alt="profile photo"
-                    width={60}
-                    height={60}
-                    objectFit="cover"
-                    className={ isProfileImageNft ? "hex" : "" }
-                />
+            <div className={`${style.profileImageContainer} ${userData.isProfileImageNft && "rounded-none"}`}>
+                {
+                    userData.profileImage
+                        &&
+                    <Image
+                        src={userData.profileImage}
+                        alt={userData.walletAddress}
+                        width={60}
+                        height={60}
+                        objectFit="cover"
+                        className={ userData.isProfileImageNft ? "hex" : "" }
+                    />
+                }
             </div>
             <section className={style.details}>
-                <h2 className={style.primary}>Omid Wakili</h2>
+                <h2 className={style.primary}>{userData.name}</h2>
                 {
                     currentAccount && (
                         <p className={style.secondary}>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { RiHome7Line, RiHome7Fill, RiFileList2Fill } from "react-icons/ri";
 import { BiHash } from "react-icons/bi";
 import { FiBell, FiMoreHorizontal } from "react-icons/fi";
@@ -14,6 +14,8 @@ import {
     BsPersonFill,
 } from "react-icons/bs";
 import { useRouter } from "next/router";
+import { TwitterContext } from "../context/TwitterContext";
+import Image from "next/image";
 
 const style = {
     wrapper: "flex-[0.7] px-8 flex flex-col",
@@ -37,8 +39,8 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ initialSelectedIcon }) => {
 
     const [selected, setSelected] = useState<String>(initialSelectedIcon);
+    const { currentAccount, currentUser } = useContext(TwitterContext);
     const router = useRouter();
-
     return (
         <header className={style.wrapper}>
             <div className={style.twitterIconContainer}>
@@ -96,23 +98,53 @@ const Sidebar: React.FC<SidebarProps> = ({ initialSelectedIcon }) => {
                 </ul>
                 <button 
                     className={style.tweetButton}
-                    // onClick={() => router.push(`${router.pathname}/?mint=${currentAccount}`)}
+                    onClick={() => router.push(`${router.pathname}/?mint=${currentAccount}`)}
                 >
                     Mint
                 </button>
             </nav>
-            <div className={style.profileButton}>
-                <div className={style.profileLeft}></div>
-                <div className={style.profileRight}>
-                    <div className={style.details}>
-                        <div className={style.name}>Omid</div>
-                        <div className={style.handle}>@0sadid0</div>
+            {
+                currentUser &&
+                    <div className={style.profileButton}>
+                        <div className={style.profileLeft}>
+                            {/* <img
+                                src={currentUser.profileImage}
+                                alt="profile"
+                                className={
+                                currentUser.isProfileImageNft
+                                    ? `${style.profileImage} smallHex`
+                                    : style.profileImage
+                                }
+                            /> */}
+                            {
+                                currentUser.profileImage
+                                &&
+                                <Image
+                                    src={currentUser.profileImage}
+                                    alt="profile"
+                                    height={40}
+                                    width={40}
+                                    className={
+                                        currentUser.isProfileImageNft
+                                            ? `${style.profileImage} smallHex`
+                                            : style.profileImage
+                                    }
+                                />
+                            }
+                        </div>
+                        <div className={style.profileRight}>
+                            <div className={style.details}>
+                                <div className={style.name}>{currentUser.name}</div>
+                                <div className={style.handle}>
+                                @{currentAccount.slice(0, 6)}...{currentAccount.slice(39)}
+                                </div>
+                            </div>
+                            <div className={style.moreContainer}>
+                                <FiMoreHorizontal />
+                            </div>
+                        </div>
                     </div>
-                    <div className={style.moreContainer}>
-                        <FiMoreHorizontal />
-                    </div>
-                </div>
-            </div>
+            }
         </header>
     );
 }

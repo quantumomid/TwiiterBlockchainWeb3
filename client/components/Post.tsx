@@ -40,13 +40,17 @@ const Post:React.FC<PostProps> = ({ displayName, userName, text, avatar, timesta
                     : style.profileImage
                 }
             >
-                <Image
-                    src={profileImageLink}
-                    alt={userName}
-                    height={40}
-                    width={40}
-                    objectFit="cover"
-                />
+                {
+                    avatar 
+                        &&
+                    <Image
+                        src={profileImageLink}
+                        alt={userName}
+                        height={40}
+                        width={40}
+                        objectFit="cover"
+                    />
+                }
             </div>
             <div className={style.postMain}>
                 <section>
