@@ -1,9 +1,11 @@
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { BsCardImage, BsEmojiSmile } from "react-icons/bs";
 import { RiFileGifLine, RiBarChartHorizontalFill } from "react-icons/ri";
 import { IoMdCalendar } from "react-icons/io";
 import { MdOutlineLocationOn } from "react-icons/md";
+import { TwitterContext } from "../../context/TwitterContext";
+import { client } from "../../lib/client";
 
 const style = {
     wrapper: "px-4 flex flex-row border-b border-[#38444d] pb-4",
@@ -21,10 +23,42 @@ const style = {
 
 const TweetBox:React.FC = () => {
     const [tweetMessage, setTweetMessage] = useState("");
-
+    const { currentAccount } = useContext(TwitterContext);
     
     const submitTweet = async (event: any) => {
-        event.preventDefault()
+        event.preventDefault();
+
+        if(!tweetMessage) return;
+
+        const tweetId = `${currentAccount}_${Date.now()}`;
+
+        const tweetDoc = {
+            _type: "tweets",
+            _id: tweetId,
+            tweet: tweetMessage,
+            timestamp: new Date(Date.now()).toISOString(),
+            author: {
+              _key: tweetId,
+              _ref: currentAccount,
+              _type: "reference",
+            },
+        };
+
+        await client.createIfNotExists(tweetDoc);
+
+        await client
+            .patch(currentAccount)
+            .setIfMissing({ tweets: [] })
+            .insert("after", "tweets[-1]", [
+                {
+                    _key: tweetId,
+                    _type: "reference",
+                    _ref: tweetId
+                }
+            ])
+            .commit()
+
+        setTweetMessage("");
     }
 
     return (
