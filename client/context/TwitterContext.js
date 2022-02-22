@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { client } from "../lib/client";
 
 export const TwitterContext = createContext();
 
@@ -23,6 +24,8 @@ export const TwitterProvider = ({ children }) => {
                 //Connected
                 setAppStatus("connected");
                 setCurrentAccount(addressArray[0]);
+                //create user account in Sanity if doesnt already exist for this wallet address
+                await createUserAccount(addressArray[0]);
             } else {
                 // NOT connected
                 router.push("/");
@@ -47,6 +50,8 @@ export const TwitterProvider = ({ children }) => {
                 //Connected
                 setAppStatus("connected");
                 setCurrentAccount(addressArray[0]);
+                //create user account in Sanity if doesnt already exist for this wallet address
+                await createUserAccount(addressArray[0]);
             } else {
                 // NOT connected
                 router.push("/");
@@ -57,6 +62,32 @@ export const TwitterProvider = ({ children }) => {
             router.push("/");
         }
     }
+
+/**
+   * Creates an account in Sanity DB if the user does not already have one
+   * @param {String} userAddress Wallet address of the currently logged in user
+   */
+  const createUserAccount = async (userAddress = currentAccount) => {
+    if (!window.ethereum) return setAppStatus("noMetaMask");
+
+    try {
+        const userDoc = {
+            _type: "users",
+            _id: userAddress,
+            name: "Unnamed",
+            isProfileImageNft: false,
+            profileImage:
+              "https://about.twitter.com/content/dam/about-twitter/en/brand-toolkit/brand-download-img-1.jpg.twimg.1920.jpg",
+            walletAddress: userAddress,
+        }
+
+        await client.createIfNotExists(userDoc);
+        setAppStatus("connected");
+    } catch (error) {
+        setAppStatus("error");
+        router.push("/");
+    }
+  }
 
     return (
         <TwitterContext.Provider value={{ appStatus, currentAccount, connectToWallet }}>
