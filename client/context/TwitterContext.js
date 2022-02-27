@@ -98,6 +98,21 @@ export const TwitterProvider = ({ children }) => {
         }
     }
 
+    /**
+   * Generates NFT profile picture URL or returns the image URL if it's not an NFT
+   * @param {String} imageUri If the user has minted a profile picture, an IPFS hash; if not then the URL of their profile picture
+   * @param {Boolean} isNft Indicates whether the user has minted a profile picture
+   * @returns A full URL to the profile picture
+   */
+    const getNftProfileImage = async (imageUri, isNft) => {
+        if (isNft) {
+            return `https://gateway.pinata.cloud/ipfs/${imageUri}`;
+        } else if (!isNft) {
+            return imageUri;
+        }
+    }
+
+    // Get all the tweets stored in Sanity DB
     const fetchTweets = async () => {
         const query = `
         *[_type == "tweets"]{
@@ -110,21 +125,27 @@ export const TwitterProvider = ({ children }) => {
         const sanityResponse = await client.fetch(query);
 
         sanityResponse.forEach(async (item) => {
-            // const profileImageUrl = await 
+            const profileImageUrl = await getNftProfileImage(
+                item.author.profileImage,
+                item.author.isProfileImageNft,
+            )
             // console.log({item})
-            const newItem = {
-                tweet: item.tweet,
-                timestamp: item.timestamp,
-                author: {
-                  name: item.author.name,
-                  walletAddress: item.author.walletAddress,
-                  profileImage: item.author.profileImage,
-                  isProfileImageNft: item.author.isProfileImageNft,
-                },
+            if (item.author.isProfileImageNft) {
+                const newItem = {
+                    tweet: item.tweet,
+                    timestamp: item.timestamp,
+                    author: {
+                    name: item.author.name,
+                    walletAddress: item.author.walletAddress,
+                    profileImage: profileImageUrl,
+                    isProfileImageNft: item.author.isProfileImageNft,
+                    },
+                }
+
+                setTweets(prevState => [...prevState, newItem]);
+            } else {
+                setTweets(prevState => [...prevState, item]);
             }
-
-            setTweets(prevState => [...prevState, newItem]);
-
         })
     }
 
@@ -149,10 +170,15 @@ export const TwitterProvider = ({ children }) => {
         `
         const response = await client.fetch(query);
 
+        const profileImageUri = await getNftProfileImage(
+            response[0].profileImage,
+            response[0].isProfileImageNft,
+        );
+
         setCurrentUser({
             tweets: response[0].tweets,
             name: response[0].name,
-            profileImage: response[0].profileImage,
+            profileImage: profileImageUri,
             walletAddress: response[0].walletAddress,
             coverImage: response[0].coverImage,
             isProfileImageNft: response[0].isProfileImageNft,
@@ -163,11 +189,13 @@ export const TwitterProvider = ({ children }) => {
         <TwitterContext.Provider 
             value={{ 
                 appStatus, 
+                setAppStatus,
                 currentAccount, 
                 connectToWallet,
                 tweets,
                 currentUser,
                 fetchTweets,
+                getNftProfileImage,
                 getCurrentUserDetails, 
             }}
         >
