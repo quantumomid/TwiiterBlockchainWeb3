@@ -10,6 +10,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <Fragment>
       <Head>
         <title>Twitter Web3 Clone</title>
+        <link rel="icon" href="/favicon.ico" />
       </Head>
       <TwitterProvider>
         <Component {...pageProps} />

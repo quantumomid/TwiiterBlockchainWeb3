@@ -81,12 +81,12 @@ const TweetBox:React.FC = () => {
             </div>
             <div className={style.tweetBoxRight}>
                 <form>
-                <textarea
-                    onChange={(e) => setTweetMessage(e.target.value)}
-                    value={tweetMessage}
-                    placeholder="What's happening?"
-                    className={style.inputField}
-                />                    
+                    <textarea
+                        onChange={(e) => setTweetMessage(e.target.value)}
+                        value={tweetMessage}
+                        placeholder="What's happening?"
+                        className={style.inputField}
+                    />                    
                 </form>
                 <div className={style.formLowerContainer}>
                     <div className={style.iconsContainer}>

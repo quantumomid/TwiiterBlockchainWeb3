@@ -12,7 +12,6 @@ const style = {
   loginContainer: "w-full h-full flex flex-col justify-center items-center pb-48",
   walletConnectButton: "text-2xl text-black bg-white font-bold mb-[-3rem] mt-[3rem] px-6 py-4 rounded-full cursor-pointer hover:bg-[#d7dbdc]",
   loginContent: "text-3xl font-bold text-center mt-24",
-
 }
 
 const Home: NextPage = () => {
@@ -71,7 +70,8 @@ const Home: NextPage = () => {
         height={200}
         width={200}
       />
-      <div className={style.loginContent}>
+      <section className={style.loginContent}>
+        <h1>
           <a
             target="_blank"
             rel="noreferrer"
@@ -79,7 +79,8 @@ const Home: NextPage = () => {
           >
             You must install MetaMask, a virtual Ethereum wallet, in your browser.
           </a>
-      </div>
+        </h1>
+      </section>
     </main>
   )
 

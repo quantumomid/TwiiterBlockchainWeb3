@@ -63,13 +63,13 @@ const ProfileHeader: React.FC = () => {
                 <button className={style.backIcon} onClick={() => router.push("/")}>
                     <BsArrowLeftShort />                
                 </button>
-                <div className={style.details}>
+                <article className={style.details}>
                     <h1 className={style.primary}>{userData.name}</h1>
                     <p className={style.secondary}>
                         {userData?.tweets?.length} 
                         {userData?.tweets?.length === 1 ? " Tweet" : " Tweets"} 
                     </p>
-                </div>
+                </article>
             </section>
             <div className={style.coverPhotoContainer}>
                 {

@@ -109,17 +109,8 @@ const Sidebar: React.FC<SidebarProps> = ({ initialSelectedIcon }) => {
             </nav>
             {
                 currentUser &&
-                    <div className={style.profileButton}>
-                        <div className={style.profileLeft}>
-                            {/* <img
-                                src={currentUser.profileImage}
-                                alt="profile"
-                                className={
-                                currentUser.isProfileImageNft
-                                    ? `${style.profileImage} smallHex`
-                                    : style.profileImage
-                                }
-                            /> */}
+                    <article className={style.profileButton}>
+                        <section className={style.profileLeft}>
                             {
                                 currentUser.profileImage
                                 &&
@@ -135,19 +126,19 @@ const Sidebar: React.FC<SidebarProps> = ({ initialSelectedIcon }) => {
                                     }
                                 />
                             }
-                        </div>
-                        <div className={style.profileRight}>
+                        </section>
+                        <section className={style.profileRight}>
                             <div className={style.details}>
-                                <div className={style.name}>{currentUser.name}</div>
-                                <div className={style.handle}>
+                                <h2 className={style.name}>{currentUser.name}</h2>
+                                <p className={style.handle}>
                                 @{currentAccount.slice(0, 6)}...{currentAccount.slice(39)}
-                                </div>
+                                </p>
                             </div>
                             <div className={style.moreContainer}>
                                 <FiMoreHorizontal />
                             </div>
-                        </div>
-                    </div>
+                        </section>
+                    </article>
             }
             <Modal
                 isOpen={Boolean(router.query.mint)} // If mint objects exists in the query property - this is only when we click in the mint button above

@@ -28,14 +28,14 @@ const style = {
 const Widgets: React.FC = () => {
     return (
         <aside className={`${style.wrapper} scrollbar-hide`}>
-            <div className={style.searchBar}>
+            <form className={style.searchBar}>
                 <BiSearch className={style.searchIcon} />
                 <input
                     placeholder='Search Twitter'
                     type='text'
                     className={style.inputBox}
                 />
-            </div>
+            </form>
             <section className={style.section}>
                 <h2 className={style.title}>What's happening?</h2>
                 {
