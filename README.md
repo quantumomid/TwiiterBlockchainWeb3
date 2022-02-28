@@ -2,24 +2,27 @@
 
 A clone of Twitter social media platform using blockchain technologies such as web3 and smart contracts. 
 
-Deployed with Vercel at [here](https://twitter-blockchain-web3.vercel.app/). 
+## Deployed with Vercel 
+
+Visit the deployed site at [here](https://twitter-blockchain-web3.vercel.app/). 
 
 ## Tech Stack
 
-- Next.js
-- Tailwind CSS (for styling) 🎨
-- Sanity CMS
-- Solidity
-- [Alchemy](https://www.alchemy.com/) 🧪
-- Metamask (for authentication) 🦊
-- [Pinata](https://www.pinata.cloud/) 🎉
-- [Ethers](https://www.npmjs.com/package/ethers)
+- Next.js: a full-stack React framework
+- Tailwind CSS (for styling) 🎨: a CSS framework perfect for building stylish and responsive apps quickly
+- Sanity CMS: a headless content management system (CMS): used for storing user data, i.e. tweets posted
+- Solidity: object oriented and high level programming language for writing smart contracts on various platforms, especially Ethereum
+- [Alchemy](https://www.alchemy.com/) 🧪: blockchain API and node service
+- Metamask (for authentication) 🦊: provides a secure way to interact with the Ethereum blockchain
+- [Pinata](https://www.pinata.cloud/) 🎉: provides easy method to upload and manage files on the IPFS (InterPlanetary File System) - key for minting the Nfts
+- [Ethers](https://www.npmjs.com/package/ethers): provides many utilities when dealing with an Ethereum wallet
 
 ## Packages
 
 - React-modal
 - React-spinners
 - React-icons
+- and more......
 
 ## Smart Contract
 

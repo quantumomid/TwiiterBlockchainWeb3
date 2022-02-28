@@ -7,9 +7,9 @@ import { FiShare } from "react-icons/fi";
 import { format } from "timeago.js";
 
 const style = {
-    wrapper: "flex p-3 border-b border-[#38444d]",
+    wrapper: "flex pt-5 md:p-3 border-b border-[#38444d]",
     profileImage: "h-[40px] w-[40px] min-w-fit rounded-full overflow-hidden",
-    postMain: "flex-1 px-4",
+    postMain: "flex-1 px-2 md:px-4",
     headerDetails: "flex flex-col items-start",
     name: "font-bold mr-1",
     verified: "text-[0.8rem]",

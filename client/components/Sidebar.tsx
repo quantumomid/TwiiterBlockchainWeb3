@@ -21,7 +21,7 @@ import ProfileImageMinter from "./profile/mintingModal/ProfileImageMinter";
 import { customStyles } from "../lib/constants";
 
 const style = {
-    wrapper: "flex-[0.7] px-8 flex flex-col",
+    wrapper: "hidden md:flex flex-[0.7] px-8 flex flex-col",
     twitterIconContainer: "text-3xl m-4",
     tweetButton: "bg-[#1d9bf0] hover:bg-[#1b8cd8] flex items-center justify-center font-bold rounded-3xl h-[50px] px-8 mt-[20px] cursor-pointer",
     navContainer: "flex-1",
